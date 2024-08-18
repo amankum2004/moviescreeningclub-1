@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import Swal from 'sweetalert2'
 import { useLocation } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 const OrderPage = () => {
   const [movies, setMovies] = useState([])
@@ -8,10 +8,10 @@ const OrderPage = () => {
   const [selectedShowtime, setSelectedShowtime] = useState(null)
   const [foodItems, setFoodItems] = useState([])
   const [selectedItems, setSelectedItems] = useState([])
-  const location = useLocation();
+  const location = useLocation()
 
-  const {movieId}=location.state;
-  console.log(movieId);
+  const { movieId } = location.state
+  console.log(movieId)
 
   useEffect(() => {
     // Fetch movies from backend
@@ -27,7 +27,7 @@ const OrderPage = () => {
       .catch((error) => console.error('Error fetching food items:', error))
   }, [])
 
-  console.log(movies);
+  console.log(movies)
   const handleMovieChange = (e) => {
     const movie = movies.find((m) => m._id === e.target.value)
     setSelectedMovie(movie)
@@ -151,17 +151,19 @@ const OrderPage = () => {
     }
   }
 
-  const matchingMovie = movies.find(movie =>
-    movie.showtimes.some(showtime => showtime._id === movieId)
-  );
-  // console.log(matchingMovie);
+  const matchingMovie = movies.find((movie) =>
+    movie.showtimes.some((showtime) => showtime._id === movieId)
+  )
+  console.log(matchingMovie)
   return (
     <div className="max-w-4xl mx-auto p-5 bg-gray-100 font-sans">
       <h2 className="text-2xl font-bold text-red-500 text-center mb-6">
         Order Food
       </h2>
 
-      <h3 className="text-lg font-semibold text-center mb-3 capitalize">current Movie: {matchingMovie.title}</h3>
+      <h3 className="text-lg font-semibold text-center mb-3 capitalize">
+        current Movie:
+      </h3>
       {selectedMovie && (
         <>
           <h3 className="text-lg font-semibold text-center mb-3">
