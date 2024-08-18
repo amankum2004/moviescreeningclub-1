@@ -17,7 +17,7 @@ const membershipSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  // seconds
+  // secondsuser
   validity: Number,
   availQR: {
     type: Number,

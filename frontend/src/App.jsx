@@ -27,6 +27,7 @@ import Tickets from '@/routes/Tickets'
 import MovieList from '@/routes/VotePage'
 import FoodList from '@/routes/FoodItem'
 import AdminFood from '@/routes/AdminFoodCorner'
+import VendorPage from './routes/vendorPage'
 
 const Scanner = lazy(() => import('@/routes/Scanner'))
 
@@ -179,6 +180,7 @@ function App() {
                 />
                 <Route path="/guidelines" element={<Guidelines />} />
                 <Route path="/metrics" element={<Metrics />} />
+                <Route path="/vendorpage" element={<VendorPage />} />
                 <Route path="*" element={<Navigate to="" />} />
               </Routes>
             </div>
