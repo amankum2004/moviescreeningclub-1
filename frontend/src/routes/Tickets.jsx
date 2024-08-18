@@ -54,17 +54,16 @@ const Tickets = () => {
       }
     })
   }
+  const handleOrders = async (e, ticket) => {
+    e.stopPropagation()
+    navigate('/food', { state: { ticket } });
+  }
   return (
     <div className="flex h-full flex-col gap-6 p-8">
       <p className="w-full text-center font-bn text-xl font-bold sm:text-5xl">
         Tickets
       </p>
-      <a href='/food'>
-      <button
-        className="w-full px-4 bg-yellow-600 rounded-lg text-white font-bold py-2 my-2">
-        Order Food
-      </button>
-      </a>
+      
       {tickets.unused.length === 0 &&
         tickets.used.length === 0 &&
         tickets.expired.length === 0 && (
@@ -149,14 +148,23 @@ const Tickets = () => {
                           }
                         )}
                       </p>
-                      {ticket.free && (
-                        <button
-                          onClick={(e) => handleDelete(e, ticket)}
-                          className="w-fit px-4 bg-red-600 rounded-lg text-white py-2"
-                        >
-                          Cancel Ticket
-                        </button>
-                      )}
+                      <div className='flex gap-2'>
+                        <a href='/food'>
+                          <button
+                            onClick={(e) => handleOrders(e, ticket)}
+                            className="w-fit px-4 bg-yellow-600 rounded-lg text-white py-2 my-2">
+                            Order Food
+                          </button>
+                        </a>
+                        {ticket.free && (
+                          <button
+                            onClick={(e) => handleDelete(e, ticket)}
+                            className="w-fit px-4 bg-red-600 rounded-lg text-white py-2 my-2"
+                          >
+                            Cancel Ticket
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 )
