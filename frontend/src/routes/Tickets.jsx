@@ -40,6 +40,7 @@ const Tickets = () => {
   }
   const handleDelete = async (e, ticket) => {
     e.stopPropagation()
+    console.log(ticket)
     Swal.fire({
       text: `You sure you want to delete ticket for ${ticket.movie.title}- ${ticket.seat}`,
       icon: 'error',
@@ -56,7 +57,9 @@ const Tickets = () => {
   }
   const handleOrders = async (e, ticket) => {
     e.stopPropagation()
-    navigate('/food', { state: { ticket } });
+    // console.log(ticket)
+    const movieId= ticket.movie.showtime._id;
+    navigate('/food', { state: { movieId } });
   }
   return (
     <div className="flex h-full flex-col gap-6 p-8">
