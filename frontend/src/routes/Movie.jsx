@@ -261,7 +261,7 @@ const Movie = () => {
             </div>
           </div>
         </div>
-        <div className="bg-white dark:bg-[#141414] rounded-xl p-2 sm:p-4 flex  w-full overflow-auto p-4">
+        <div className="bg-white dark:bg-[#141414] rounded-xl sm:p-4 flex  w-full overflow-auto p-4">
           {seats && (
             <Seats
               seats={seats}
