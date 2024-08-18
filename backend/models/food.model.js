@@ -1,24 +1,40 @@
-const mongoose = require('mongoose');
+// foodmodel.js
 
-const orderSchema = new mongoose.Schema({
-    movie: {
-        movieId: { type: mongoose.Schema.Types.ObjectId, ref: 'Movie', required: true },
-        title: { type: String, required: true },
-        showtimeId: { type: mongoose.Schema.Types.ObjectId, required: true },
-        showtimeDate: { type: Date, required: true }
+const mongoose = require('mongoose')
+
+const foodSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User', // Ensure 'User' refers to your user model
+    required: true
+  },
+  foodList: {
+    type: [[mongoose.Schema.Types.ObjectId, Number]], // Array of arrays with ObjectId and Number
+    validate: {
+      validator: function (v) {
+        return v.every(
+          (item) =>
+            Array.isArray(item) &&
+            item.length === 2 &&
+            mongoose.Types.ObjectId.isValid(item[0]) &&
+            typeof item[1] === 'number'
+        )
+      },
+      message:
+        'Invalid format for foodList. Each item should be an array of length 2 with an ObjectId and a number.'
     },
-    items: [
-        {
-            foodName: { type: String, required: true },
-            quantity: { type: Number, required: true },
-            price: { type: Number, required: true },
-            vendor: { type: String, required: true }
-        }
-    ],
-    totalPrice: { type: Number, required: true },
-    email: { type: String, required: true },
-    otp: { type: String, required: true },
-    createdAt: { type: Date, default: Date.now }
-});
+    required: true
+  },
+  otp: {
+    type: String,
+    required: true
+  },
+  delivered: {
+    type: Boolean,
+    default: false
+  }
+})
 
-module.exports = mongoose.model('Order', orderSchema);
+const Food = mongoose.model('Food', foodSchema)
+
+module.exports = Food
