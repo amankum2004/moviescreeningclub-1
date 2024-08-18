@@ -21,38 +21,7 @@ const OrderPage = () => {
       .then((data) => setFoodItems(data))
       .catch((error) => console.error('Error fetching food items:', error))
   }, [])
-  const buyMembership = async () => {
-    try {
-      if (loading) return
-      setLoading(true)
-      const res = await api.post('/membership/request', {
-        memtype: mem.name
-      })
-      setLoading(false)
-      if (res.status !== 200) {
-        console.error('Error requesting membership:', res.data.error)
-        return
-      }
-      const options = {
-        atomTokenId: res.data.atomTokenId,
-        merchId: res.data.merchId,
-        custEmail: user.email,
-        custMobile: user.phone,
-        returnUrl:
-          (import.meta.env.VITE_environment === 'development'
-            ? 'http://localhost:8000'
-            : document.location.origin) + '/api/membership/redirect'
-      }
-      let atom = new AtomPaynetz(options, 'uat')
-    } catch (err) {
-      Swal.fire({
-        title: 'Error!',
-        text: err.response.data.error,
-        icon: 'error'
-      })
-      setLoading(false)
-    }
-  }
+
   const handleMovieChange = (e) => {
     const movie = movies.find((m) => m._id === e.target.value)
     setSelectedMovie(movie)
@@ -177,11 +146,17 @@ const OrderPage = () => {
   }
 
   return (
-    <div className="order-page">
-      <h2 style={{ fontSize: '28px', color: 'red' }}>Order Food</h2>
+    <div className="max-w-4xl mx-auto p-5 bg-gray-100 font-sans">
+      <h2 className="text-2xl font-bold text-red-500 text-center mb-6">
+        Order Food
+      </h2>
 
-      <h3>Select Movie</h3>
-      <select onChange={handleMovieChange} value={selectedMovie?._id || ''}>
+      <h3 className="text-lg font-semibold text-center mb-3">Select Movie</h3>
+      <select
+        className="block w-full p-3 rounded-md border border-gray-300 mb-5"
+        onChange={handleMovieChange}
+        value={selectedMovie?._id || ''}
+      >
         <option value="" disabled>
           Select Movie
         </option>
@@ -194,8 +169,11 @@ const OrderPage = () => {
 
       {selectedMovie && (
         <>
-          <h3>Select Showtime</h3>
+          <h3 className="text-lg font-semibold text-center mb-3">
+            Select Showtime
+          </h3>
           <select
+            className="block w-full p-3 rounded-md border border-gray-300 mb-5"
             onChange={handleShowtimeChange}
             value={selectedShowtime?._id || ''}
           >
@@ -211,60 +189,72 @@ const OrderPage = () => {
         </>
       )}
 
-      <h3>Select Food</h3>
-      <div className="food-list">
+      <h3 className="text-lg font-semibold text-center mb-4">Select Food</h3>
+      <div className="space-y-6">
         {foodItems.map((food) => (
-          <div key={food._id} className="food-item">
-            <img src={food.poster} alt={food.foodName} />
-            <h2 className="content">{food.foodName}</h2>
-            <ul>
-              <p
-                className="content"
-                style={{ marginLeft: '-70px', color: 'green' }}
+          <div
+            key={food._id}
+            className="flex items-center bg-white p-4 rounded-lg shadow"
+          >
+            <img
+              src={food.poster}
+              alt={food.foodName}
+              className="w-24 h-24 object-cover rounded-lg mr-4"
+            />
+            <div className="flex-1">
+              <h2 className="text-lg font-semibold text-gray-800">
+                {food.foodName}
+              </h2>
+              <p className="text-green-600">{food.description}</p>
+              <p className="text-gray-800">Rs. {food.price}</p>
+              <p className="text-gray-600">Vendor: {food.vendor}</p>
+            </div>
+            <div className="flex items-center space-x-2">
+              <button
+                className="bg-yellow-500 text-white font-bold px-3 py-1 rounded hover:bg-yellow-600"
+                onClick={() => handleDecrease(food)}
               >
-                {food.description}
-              </p>
-              <p
-                className="content"
-                style={{ color: 'black', marginLeft: '-70px' }}
-              >
-                Rs. {food.price}
-              </p>
-              <p className="content" style={{ marginLeft: '-70px' }}>
-                Vendor - {food.vendor}
-              </p>
-            </ul>
-
-            <div>
-              <button onClick={() => handleDecrease(food)}>-</button>
-              <span>
+                -
+              </button>
+              <span className="font-bold text-lg">
                 {selectedItems.find(
                   (item) =>
                     item.foodName === food.foodName &&
                     item.vendor === food.vendor
                 )?.quantity || 0}
               </span>
-              <button onClick={() => handleIncrease(food)}>+</button>
+              <button
+                className="bg-yellow-500 text-white font-bold px-3 py-1 rounded hover:bg-yellow-600"
+                onClick={() => handleIncrease(food)}
+              >
+                +
+              </button>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="order-summary">
-        <h3>Order Summary</h3>
-        <ul>
+      <div className="mt-8 p-6 bg-white rounded-lg shadow">
+        <h3 className="text-xl font-semibold mb-4">Order Summary</h3>
+        <ul className="space-y-2">
           {selectedItems.map((item) => (
-            <li key={`${item.foodName}-${item.vendor}`}>
+            <li
+              key={`${item.foodName}-${item.vendor}`}
+              className="text-gray-800"
+            >
               {item.foodName} (Vendor: {item.vendor}) - {item.quantity} x Rs.{' '}
               {item.price / item.quantity} = Rs. {item.price}
             </li>
           ))}
         </ul>
-        <p>
+        <p className="text-right text-xl font-semibold mt-4">
           Total Price: Rs.{' '}
           {selectedItems.reduce((total, item) => total + item.price, 0)}
         </p>
-        <button onClick={handleSubmitOrder} style={{ color: 'red' }}>
+        <button
+          className="mt-6 w-full bg-red-500 text-white font-bold py-3 rounded hover:bg-red-600"
+          onClick={handleSubmitOrder}
+        >
           Place Order
         </button>
       </div>

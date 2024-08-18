@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
-import './AdminFoodCorner.css'
 
 const AdminFood = () => {
   const [foodItems, setFoodItems] = useState([])
