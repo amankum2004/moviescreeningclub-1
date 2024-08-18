@@ -110,6 +110,13 @@ const AdminFood = () => {
     };
 
     return (
+        <>
+        <a href='/ordersget'>
+            <button
+                className="w-full px-4 bg-yellow-600 rounded-lg text-white font-bold py-2">
+                Orders Received
+            </button>
+        </a>
         <div className="admin-food-container">
             <div className="add-food-form">
                 <h2>{editingId ? 'Edit Food Item' : 'Add Food Item'}</h2>
@@ -121,7 +128,7 @@ const AdminFood = () => {
                             value={foodName}
                             onChange={(e) => setFoodName(e.target.value)}
                             required
-                        />
+                            />
                     </div>
                     <div>
                         <label>Vendor:</label>
@@ -130,7 +137,7 @@ const AdminFood = () => {
                             value={vendor}
                             onChange={(e) => setVendor(e.target.value)}
                             required
-                        />
+                            />
                     </div>
                     <div>
                         <label>Price:</label>
@@ -139,14 +146,14 @@ const AdminFood = () => {
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
                             required
-                        />
+                            />
                     </div>
                     <div>
                         <label>Description:</label>
                         <textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                        />
+                            />
                     </div>
                     <div>
                         <label>Image URL:</label>
@@ -187,6 +194,7 @@ const AdminFood = () => {
                 )}
             </div>
         </div>
+        </>
     );
 };
 

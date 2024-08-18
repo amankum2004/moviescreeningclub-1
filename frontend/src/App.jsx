@@ -27,6 +27,7 @@ import Tickets from '@/routes/Tickets'
 import MovieList from '@/routes/VotePage'
 import FoodList from '@/routes/FoodItem'
 import AdminFood from '@/routes/AdminFoodCorner'
+import FoodVerify from '@/routes/FoodVerify'
 
 const Scanner = lazy(() => import('@/routes/Scanner'))
 
@@ -174,6 +175,22 @@ function App() {
                   element={
                     <AuthenticatedRoute minLevel="admin">
                       <AdminFood />
+                    </AuthenticatedRoute>
+                  }
+                />
+                <Route
+                  path="/ordersget"
+                  element={
+                    <AuthenticatedRoute minLevel="admin">
+                      <AdminFood />
+                    </AuthenticatedRoute>
+                  }
+                />
+                <Route
+                  path="/foodverify"
+                  element={
+                    <AuthenticatedRoute minLevel="admin">
+                      <FoodVerify />
                     </AuthenticatedRoute>
                   }
                 />

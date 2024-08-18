@@ -157,6 +157,9 @@ const Navbar = () => {
                 <NavItem to="/addmovie" toggleMenu={toggleMenu}>
                   Add Movie
                 </NavItem>
+                <NavItem to="/foodverify" toggleMenu={toggleMenu}>
+                  Food Verify
+                </NavItem>
               </>
             )}
           </>

@@ -17,7 +17,6 @@ const orderSchema = new mongoose.Schema({
     ],
     totalPrice: { type: Number, required: true },
     email: { type: String, required: true },
-    otp: { type: String, required: true },
     createdAt: { type: Date, default: Date.now }
 });
 

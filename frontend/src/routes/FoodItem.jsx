@@ -7,6 +7,7 @@ const OrderPage = () => {
     const [selectedShowtime, setSelectedShowtime] = useState(null);
     const [foodItems, setFoodItems] = useState([]);
     const [selectedItems, setSelectedItems] = useState([]);
+    const [email, setEmail] = useState('');
 
     useEffect(() => {
         // Fetch movies from backend
@@ -102,7 +103,19 @@ const OrderPage = () => {
     return (
         <div className="order-page">
             <h2 style={{fontSize:"28px",color:"red"}}>Order Food</h2>
-
+            <label className="flex flex-col gap-2 rounded-2xl w-full">
+              <span>Email</span>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                className="w-full rounded-xl bg-[#ADADAD]/15 dark:bg-[#F60101]/15 py-2 px-4 sm:min-w-[300px]"
+                placeholder="Enter your email"
+                required
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)} 
+              />
+            </label>
             <h3>Select Movie</h3>
             <select onChange={handleMovieChange} value={selectedMovie?._id || ''}>
                 <option value="" disabled>Select Movie</option>

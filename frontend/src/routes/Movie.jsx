@@ -247,12 +247,12 @@ const Movie = () => {
                 <div className="hidden bg-green-700 dark:bg-green-900 " />
               </div>
               <div className="hidden bg-green-300 dark:bg-green-500" />
-              {/* <a href='/food'>
+              <a href='/food'>
                 <button
                   className="w-full px-4 bg-yellow-600 rounded-lg text-white font-bold py-2 my-10">
                   Order Food
                 </button>
-              </a> */}
+              </a>
               {isAllowedLvl('movievolunteer', user.usertype) && (
                 <>
                 <button

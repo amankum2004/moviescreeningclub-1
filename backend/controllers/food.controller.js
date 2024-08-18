@@ -2,14 +2,13 @@ const Order = require("@/models/food.model")
 
 exports.createOrder = async (req, res) => {
     try {
-        const { movie, items, totalPrice, email, otp } = req.body;
+        const { movie, items, totalPrice, email } = req.body;
 
         const order = new Order({
             movie,
             items,
             totalPrice,
-            email,
-            otp
+            email
         });
 
         await order.save();
