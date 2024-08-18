@@ -28,11 +28,6 @@ const OrderPage = () => {
   }, [])
 
   console.log(movies);
-  const handleMovieChange = (e) => {
-    const movie = movies.find((m) => m._id === e.target.value)
-    setSelectedMovie(movie)
-    setSelectedShowtime(null) // Reset showtime selection
-  }
 
   const handleShowtimeChange = (e) => {
     const showtime = selectedMovie.showtimes.find(
@@ -154,14 +149,19 @@ const OrderPage = () => {
   const matchingMovie = movies.find(movie =>
     movie.showtimes.some(showtime => showtime._id === movieId)
   );
-  // console.log(matchingMovie);
+  console.log(matchingMovie);
+
+  let moviename="";
+  if(matchingMovie){
+    moviename=matchingMovie.title;
+  }
   return (
     <div className="max-w-4xl mx-auto p-5 bg-gray-100 font-sans">
       <h2 className="text-2xl font-bold text-red-500 text-center mb-6">
         Order Food
       </h2>
 
-      <h3 className="text-lg font-semibold text-center mb-3 capitalize">current Movie: {matchingMovie.title}</h3>
+      <h3 className="text-lg font-semibold text-center mb-3 capitalize">current Movie: {moviename}</h3>
       {selectedMovie && (
         <>
           <h3 className="text-lg font-semibold text-center mb-3">
