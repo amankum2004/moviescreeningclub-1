@@ -37,7 +37,6 @@ const AdminFood = () => {
           }
         )
         if (response.ok) {
-          // alert('Food item updated successfully!');
           Swal.fire({
             title: 'Success',
             text: 'Food item updated successfully',
@@ -46,10 +45,9 @@ const AdminFood = () => {
           resetForm()
           setEditingId(null)
         } else {
-          // alert('Failed to update food item');
           Swal.fire({
             title: 'Error',
-            text: 'failed to update food item',
+            text: 'Failed to update food item',
             icon: 'error'
           })
         }
@@ -71,7 +69,6 @@ const AdminFood = () => {
           }
         )
         if (response.ok) {
-          // alert('Food item added successfully!');
           Swal.fire({
             title: 'Success',
             text: 'Food item added successfully',
@@ -79,7 +76,6 @@ const AdminFood = () => {
           })
           resetForm()
         } else {
-          // alert('Failed to add food item');
           Swal.fire({
             title: 'Error',
             text: 'Failed to add food item',
@@ -124,7 +120,6 @@ const AdminFood = () => {
         }
       )
       if (response.ok) {
-        // alert('Food item deleted successfully!');
         Swal.fire({
           title: 'Success',
           text: 'Food item deleted successfully',
@@ -132,7 +127,6 @@ const AdminFood = () => {
         })
         setFoodItems(foodItems.filter((item) => item._id !== id))
       } else {
-        // alert('Failed to delete food item');
         Swal.fire({
           title: 'Error',
           text: 'Failed to delete food item',
@@ -145,87 +139,98 @@ const AdminFood = () => {
   }
 
   return (
-    <div className="admin-food-container">
-      <div className="add-food-form">
-        <h2>{editingId ? 'Edit Food Item' : 'Add Food Item'}</h2>
+    <div className="flex flex-wrap gap-5 justify-between p-5">
+      <div className="flex-1 min-w-[300px] p-5 border border-gray-300 rounded-lg bg-gray-100">
+        <h2 className="mb-5 text-xl">
+          {editingId ? 'Edit Food Item' : 'Add Food Item'}
+        </h2>
         <form onSubmit={handleSubmit}>
-          <div>
-            <label>Food Name:</label>
+          <div className="mb-4">
+            <label className="block font-bold mb-1">Food Name:</label>
             <input
               type="text"
               value={foodName}
               onChange={(e) => setFoodName(e.target.value)}
               required
+              className="w-full p-2 border border-gray-400 rounded"
             />
           </div>
-          <div>
-            <label>Vendor:</label>
+          <div className="mb-4">
+            <label className="block font-bold mb-1">Vendor:</label>
             <input
               type="text"
               value={vendor}
               onChange={(e) => setVendor(e.target.value)}
               required
+              className="w-full p-2 border border-gray-400 rounded"
             />
           </div>
-          <div>
-            <label>Price:</label>
+          <div className="mb-4">
+            <label className="block font-bold mb-1">Price:</label>
             <input
               type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               required
+              className="w-full p-2 border border-gray-400 rounded"
             />
           </div>
-          <div>
-            <label>Description:</label>
+          <div className="mb-4">
+            <label className="block font-bold mb-1">Description:</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              className="w-full p-2 border border-gray-400 rounded"
             />
           </div>
-          <div>
-            <label>Image URL:</label>
+          <div className="mb-4">
+            <label className="block font-bold mb-1">Image URL:</label>
             <input
               type="text"
               value={poster}
               onChange={(e) => setPoster(e.target.value)}
               required
+              className="w-full p-2 border border-gray-400 rounded"
             />
           </div>
           <button
             type="submit"
-            style={{
-              backgroundColor: 'yellow',
-              color: 'red',
-              fontWeight: 'bold'
-            }}
+            className="bg-yellow-400 text-red-600 font-bold py-2 px-4 rounded hover:bg-yellow-300"
           >
             {editingId ? 'Update Food Item' : 'Add Food Item'}
           </button>
         </form>
       </div>
-      <div className="food-list">
-        <h3>Food Items List</h3>
+      <div className="flex-1 min-w-[300px] p-5 border border-gray-300 rounded-lg bg-gray-100">
+        <h3 className="mb-5 text-xl">Food Items List</h3>
         {foodItems.length > 0 ? (
-          <ul>
+          <ul className="space-y-5">
             {foodItems.map((food) => (
-              <li key={food._id} className="food-item">
-                <img src={food.poster} alt={food.foodName} />
-                <h4 style={{ marginBottom: 'auto', fontWeight: 'bold' }}>
-                  {food.foodName}
-                </h4>
-                <ul>
-                  <p style={{ marginLeft: '-70px', color: 'green' }}>
-                    {food.description}
-                  </p>
-                  <p style={{ color: 'black', marginLeft: '-70px' }}>
-                    Rs. {food.price}
-                  </p>
-                  <p style={{ marginLeft: '-70px' }}>{food.vendor}</p>
-                </ul>
-                <div>
-                  <button onClick={() => handleEdit(food)}>Edit</button>
-                  <button onClick={() => handleDelete(food._id)}>Delete</button>
+              <li key={food._id} className="flex items-center border-b pb-4">
+                <img
+                  src={food.poster}
+                  alt={food.foodName}
+                  className="w-24 h-24 object-cover rounded mr-4"
+                />
+                <div className="flex-1">
+                  <h4 className="text-lg font-bold">{food.foodName}</h4>
+                  <p className="text-green-600">{food.description}</p>
+                  <p className="text-black">Rs. {food.price}</p>
+                  <p>{food.vendor}</p>
+                </div>
+                <div className="ml-auto flex space-x-2">
+                  <button
+                    onClick={() => handleEdit(food)}
+                    className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-400"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(food._id)}
+                    className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-400"
+                  >
+                    Delete
+                  </button>
                 </div>
               </li>
             ))}

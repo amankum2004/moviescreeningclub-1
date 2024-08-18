@@ -21,7 +21,38 @@ const OrderPage = () => {
       .then((data) => setFoodItems(data))
       .catch((error) => console.error('Error fetching food items:', error))
   }, [])
-
+  const buyMembership = async () => {
+    try {
+      if (loading) return
+      setLoading(true)
+      const res = await api.post('/membership/request', {
+        memtype: mem.name
+      })
+      setLoading(false)
+      if (res.status !== 200) {
+        console.error('Error requesting membership:', res.data.error)
+        return
+      }
+      const options = {
+        atomTokenId: res.data.atomTokenId,
+        merchId: res.data.merchId,
+        custEmail: user.email,
+        custMobile: user.phone,
+        returnUrl:
+          (import.meta.env.VITE_environment === 'development'
+            ? 'http://localhost:8000'
+            : document.location.origin) + '/api/membership/redirect'
+      }
+      let atom = new AtomPaynetz(options, 'uat')
+    } catch (err) {
+      Swal.fire({
+        title: 'Error!',
+        text: err.response.data.error,
+        icon: 'error'
+      })
+      setLoading(false)
+    }
+  }
   const handleMovieChange = (e) => {
     const movie = movies.find((m) => m._id === e.target.value)
     setSelectedMovie(movie)
