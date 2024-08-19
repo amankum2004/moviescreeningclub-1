@@ -90,10 +90,10 @@ const createOrder = async (req, res) => {
       amount,
       userEmailId,
       userContactNo,
-      user.userId.toString(),
+      user._id.toString(),
       {
         udf1: order._id.toString(),
-        udf2: user.userId.toString(),
+        udf2: user._id.toString(),
         udf3: 'FOOD',
         udf4: '',
         udf5: ''
