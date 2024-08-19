@@ -105,14 +105,12 @@ const OrderPage = () => {
         try {
           const response = await api.post('/order', orderData)
           console.log(orderData)
-          if (!response.ok) {
+          if (response.status !== 200) {
             Swal.fire({
               title: 'Error',
               text: 'Failed to place order',
               icon: 'error'
             })
-          }
-          if (response.status !== 200) {
             console.error('Error requesting membership:', res.data.error)
             return
           }

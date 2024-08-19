@@ -1,4 +1,25 @@
 const Food = require('@/models/food/food.model')
+const Order = require('@/models/food/order.model')
+const increaseQuantityForUnpaidOrders = async () => {
+  const twentyMinutesAgo = new Date(Date.now() - 20 * 60 * 1000)
+
+  const orders = await Order.find({
+    paid: false,
+    createdAt: { $lt: twentyMinutesAgo }
+  })
+
+  for (const order of orders) {
+    for (const foodItem of order.foodList) {
+      await Food.findByIdAndUpdate(foodItem._id, {
+        $inc: { quantity: foodItem.quantity }
+      })
+    }
+  }
+  await Order.deleteMany({
+    paid: false,
+    createdAt: { $lt: twentyMinutesAgo }
+  })
+}
 
 const getFoodItemsByShowTime = async (req, res) => {
   try {
@@ -7,6 +28,7 @@ const getFoodItemsByShowTime = async (req, res) => {
       showtime: showTimeId
     })
     res.status(200).json(foodItems)
+    await increaseQuantityForUnpaidOrders()
   } catch (err) {
     res.status(500).json({ message: err.message })
   }
