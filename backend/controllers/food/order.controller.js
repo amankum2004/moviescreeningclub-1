@@ -4,13 +4,12 @@ const { getAtomFromGateway } = require('@/utils/payment')
 const { decrypt, generateSignature } = require('@/utils/payment')
 const crypto = require('crypto')
 const { mailOtpFood } = require('@/utils/mail')
-
+const User = require('@/models/user.model')
 const getAmount = (items) => {
   return items.reduce((acc, item) => acc + item.price * item.quantity, 0)
 }
 const createOrder = async (req, res) => {
   try {
-    const { user } = req
     const { showtimeId, items } = req.body
     const foods = await Food.find({
       _id: { $in: items.map((food) => food._id) },
@@ -38,10 +37,10 @@ const createOrder = async (req, res) => {
       (fwq) => !insufficientFoodIds.has(fwq._id.toString())
     )
     const order = new Order({
-      user: user.userId,
+      user: req.user.userId,
       showtime: showtimeId,
       foodList: filteredFoods,
-      email: user.email,
+      email: req.user.email,
       otp: crypto.randomBytes(16).toString('hex').slice(0, 6),
       txnId: crypto.randomBytes(16).toString('hex')
     })
@@ -81,6 +80,7 @@ const createOrder = async (req, res) => {
       .toISOString()
       .replace(/T/, ' ')
       .replace(/\..+/, '')
+    const user = await User.findById(req.user.userId)
     const amount = getAmount(order.foodList)
     const userEmailId = user.email
     const userContactNo = user.phone
