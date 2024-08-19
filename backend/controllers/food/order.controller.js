@@ -4,7 +4,7 @@ const { getAtomFromGateway } = require('@/utils/payment')
 const { decrypt, generateSignature } = require('@/utils/payment')
 const crypto = require('crypto')
 const { mailOtpFood } = require('@/utils/mail')
-const User = require('@/models/user.model')
+const User = require('@/models/user/user.model')
 const getAmount = (items) => {
   return items.reduce((acc, item) => acc + item.price * item.quantity, 0)
 }
