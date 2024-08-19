@@ -85,7 +85,7 @@ const createOrder = async (req, res) => {
     const amount = getAmount(order.foodList)
     const userEmailId = user.email
     const userContactNo = user.phone
-    const { error, atomTokenId } = await getAtomFromGateway(
+    const { error, atomTokenId, merchId } = await getAtomFromGateway(
       txnId,
       txnDate,
       amount,
