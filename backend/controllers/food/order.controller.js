@@ -75,7 +75,7 @@ const createOrder = async (req, res) => {
     if (!saved) {
       return res.status(400).json({ message: 'Failed to save order' })
     }
-    await order.populate('foodList._id').execPopulate()
+    await order.populate('foodList._id')
     const txnId = order.txnId
     const txnDate = new Date()
       .toISOString()
