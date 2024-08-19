@@ -9,7 +9,6 @@ const getAmount = (items) => {
   return items.reduce((acc, item) => acc + item.price * item.quantity, 0)
 }
 const createOrder = async (req, res) => {
-  const session = await Food.startSession()
   try {
     const { user } = req
     const { showtimeId, items } = req.body
@@ -46,7 +45,6 @@ const createOrder = async (req, res) => {
       otp: crypto.randomBytes(16).toString('hex').slice(0, 6),
       txnId: crypto.randomBytes(16).toString('hex')
     })
-    session.startTransaction()
     const saveFood = await Promise.all(
       filteredFoods.map(async (food) => {
         const res = await Food.findOneAndUpdate(
@@ -59,8 +57,7 @@ const createOrder = async (req, res) => {
             $inc: { quantity: -food.quantity } // Decrease the quantity
           },
           {
-            new: true,
-            session // Pass the session to ensure this operation is part of the transaction
+            new: true
           }
         )
         return res
@@ -68,18 +65,14 @@ const createOrder = async (req, res) => {
     )
 
     if (saveFood.includes(null)) {
-      await session.abortTransaction()
-      session.endSession()
       return res.status(400).json({
         message:
           'Failed to add order: insufficient quantity or food unavailable'
       })
     }
 
-    const saved = await order.save({ session })
+    const saved = await order.save()
 
-    await session.commitTransaction()
-    session.endSession()
     if (!saved) {
       return res.status(400).json({ message: 'Failed to save order' })
     }
@@ -115,8 +108,6 @@ const createOrder = async (req, res) => {
       merchId: merchId
     })
   } catch (error) {
-    await session.abortTransaction()
-    session.endSession()
     console.error('Error creating order:', error)
     res.status(500).json({ message: 'Failed to create order', error })
   }
