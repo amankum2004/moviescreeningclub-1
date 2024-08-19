@@ -118,17 +118,16 @@ const confirmOrder = async (req, res) => {
   try {
     const decrypted_data = decrypt(req.body.encData)
     const jsonData = JSON.parse(decrypted_data)
+    console.log(jsonData)
     const signature = generateSignature(jsonData.payInstrument)
     if (signature !== jsonData.payInstrument.payDetails.signature) {
       console.log('signature mismatched!!')
       return res.redirect(
-        `${process.env.FRONTEND_URL}/home?err=signature_mismatched`
+        `${process.env.FRONTEND_URL}/?err=signature_mismatched`
       )
     }
     if (jsonData.payInstrument.responseDetails.statusCode !== 'OTS0000') {
-      return res.redirect(
-        `${process.env.FRONTEND_URL}/home?err=transaction_failed`
-      )
+      return res.redirect(`${process.env.FRONTEND_URL}/?err=transaction_failed`)
     }
 
     const orderId = jsonData.payInstrument.extras.udf1
@@ -136,26 +135,23 @@ const confirmOrder = async (req, res) => {
     const email = jsonData.payInstrument.custDetails.custEmail.toLowerCase()
     const txnId = jsonData.payInstrument.merchDetails.merchTxnId
 
-    const order = await Order.findOne({ orderId, user: userId })
+    const order = await Order.findOne({ _id: orderId, user: userId })
     if (!order) {
-      return res.redirect(
-        `${process.env.FRONTEND_URL}/home?err=order_not_found`
-      )
+      return res.redirect(`${process.env.FRONTEND_URL}/?err=order_not_found`)
     }
     if (order.delivered) {
       return res.redirect(
-        `${process.env.FRONTEND_URL}/home?err=order_already_delivered`
+        `${process.env.FRONTEND_URL}/?err=order_already_delivered`
       )
     }
     order.paid = true
-    order.txnId = txnId
     await order.save()
     await mailOtpFood(order.otp, email)
-    return res.redirect(`${process.env.FRONTEND_URL}/home?msg=order_confirmed`)
+    return res.redirect(`${process.env.FRONTEND_URL}/?msg=order_confirmed`)
   } catch (error) {
     console.error('Error saving order:', error)
     return res.redirect(
-      `${process.env.FRONTEND_URL}/home?err=internal_server_error`
+      `${process.env.FRONTEND_URL}/?err=internal_server_error`
     )
   }
 }
