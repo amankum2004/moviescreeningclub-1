@@ -9,6 +9,7 @@ const getAmount = (items) => {
   return items.reduce((acc, item) => acc + item.price * item.quantity, 0)
 }
 const createOrder = async (req, res) => {
+  const session = await Food.startSession()
   try {
     const { user } = req
     const { showtimeId, items } = req.body
@@ -45,8 +46,7 @@ const createOrder = async (req, res) => {
       otp: crypto.randomBytes(16).toString('hex').slice(0, 6),
       txnId: crypto.randomBytes(16).toString('hex')
     })
-    const session = await Food.startSession()
-
+    session.startTransaction()
     const saveFood = await Promise.all(
       filteredFoods.map(async (food) => {
         const res = await Food.findOneAndUpdate(
