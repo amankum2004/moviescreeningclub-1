@@ -108,7 +108,6 @@ const Movie = () => {
   const maxAllowed = movieFree
     ? freePasses
     : (memberships?.find((membership) => membership.isValid)?.availQR ?? 0)
-  console.log('max', maxAllowed)
   const bookSeats = async () => {
     try {
       setLoading(true)
@@ -247,6 +246,7 @@ const Movie = () => {
                 <div className="hidden bg-green-700 dark:bg-green-900 " />
               </div>
               <div className="hidden bg-green-300 dark:bg-green-500" />
+<<<<<<< HEAD
               <a href='/food'>
                 <button
                   className="w-full px-4 bg-yellow-600 rounded-lg text-white font-bold py-2 my-10">
@@ -255,10 +255,14 @@ const Movie = () => {
               </a>
               {isAllowedLvl('movievolunteer', user.usertype) && (
                 <>
+=======
+              <div className="flex flex-col gap-2 my-5">
+>>>>>>> 2991839200574039184e38cdf0b262db3d9c089c
                 <button
                   onClick={() => {
-                    navigate('/showtime?movieId=' + movieId)
+                    navigate('/order?showtime=' + showtime)
                   }}
+<<<<<<< HEAD
                   className="rounded-md bg-red-500 p-2 text-white my-5">
                   Edit
                 </button>
@@ -270,6 +274,33 @@ const Movie = () => {
                   Order Food
                 </button>
               </a>
+=======
+                  className="rounded-md bg-orange-500 p-2 text-white"
+                >
+                  Order Food
+                </button>
+                {isAllowedLvl('movievolunteer', user.usertype) && (
+                  <>
+                    <button
+                      onClick={() => {
+                        navigate('/showtime?movieId=' + movieId)
+                      }}
+                      className="rounded-md bg-red-500 p-2 text-white"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => {
+                        navigate('/food?showtime=' + showtime)
+                      }}
+                      className="rounded-md bg-red-500 p-2 text-white"
+                    >
+                      Edit Food
+                    </button>
+                  </>
+                )}
+              </div>
+>>>>>>> 2991839200574039184e38cdf0b262db3d9c089c
             </div>
           </div>
         </div>
