@@ -178,9 +178,9 @@ const AdminFood = () => {
                                 <img src={food.poster} alt={food.foodName} />
                                 <h4 style={{marginBottom:"auto",fontWeight:"bold"}}>{food.foodName}</h4>
                                 <ul>
-                                    <p style={{marginLeft:"-70px",color:"green"}}>{food.description}</p>
-                                    <p style={{color:"black",marginLeft:"-70px"}}>Rs. {food.price}</p>
-                                    <p style={{marginLeft:"-70px"}}>{food.vendor}</p>
+                                    <p style={{marginLeft:"-40px",color:"green"}}>{food.description}</p>
+                                    <p style={{color:"black",marginLeft:"-40px"}}>Rs. {food.price}</p>
+                                    <p style={{marginLeft:"-40px"}}>{food.vendor}</p>
                                 </ul>
                                 <div>
                                     <button onClick={() => handleEdit(food)}>Edit</button>

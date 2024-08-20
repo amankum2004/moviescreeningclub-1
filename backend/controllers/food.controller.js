@@ -28,19 +28,19 @@ exports.getOrders = async (req, res) => {
 };
 
 // Verify email and OTP
-exports.verifyOtp = async (req, res) => {
-    try {
-        const { email, otp } = req.body;
+// exports.verifyOtp = async (req, res) => {
+//     try {
+//         const { email, otp } = req.body;
 
-        const order = await Order.findOne({ email, otp });
+//         const order = await Order.findOne({ email, otp });
 
-        if (order) {
-            res.status(200).json({ message: 'OTP verified successfully!', orderId: order._id });
-        } else {
-            res.status(400).json({ message: 'Invalid email or OTP.' });
-        }
-    } catch (error) {
-        console.error('Error verifying OTP:', error);
-        res.status(500).json({ message: 'Failed to verify OTP.' });
-    }
-};
+//         if (order) {
+//             res.status(200).json({ message: 'OTP verified successfully!', orderId: order._id });
+//         } else {
+//             res.status(400).json({ message: 'Invalid email or OTP.' });
+//         }
+//     } catch (error) {
+//         console.error('Error verifying OTP:', error);
+//         res.status(500).json({ message: 'Failed to verify OTP.' });
+//     }
+// };

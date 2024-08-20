@@ -1,5 +1,7 @@
 import  { useState, useEffect } from 'react';
+import { useLogin } from '../components/LoginContext';
 import Swal from 'sweetalert2'
+import './AdminFoodCorner.css';
 
 const OrderPage = () => {
     const [movies, setMovies] = useState([]);
@@ -8,6 +10,7 @@ const OrderPage = () => {
     const [foodItems, setFoodItems] = useState([]);
     const [selectedItems, setSelectedItems] = useState([]);
     const [email, setEmail] = useState('');
+    const {user} = useLogin();
 
     useEffect(() => {
         // Fetch movies from backend
@@ -66,6 +69,11 @@ const OrderPage = () => {
             return;
         }
 
+        if (selectedItems.length === 0 || selectedItems.every(item => item.quantity === 0)) {
+            Swal.fire({ title: 'Error', text: 'Please add at least one item to your order', icon: 'error' });
+            return;
+        }
+
         const totalPrice = selectedItems.reduce((total, item) => total + item.price, 0);
         const orderData = {
             movie: {
@@ -75,7 +83,8 @@ const OrderPage = () => {
                 showtimeDate: selectedShowtime.date
             },
             items: selectedItems,
-            totalPrice
+            totalPrice,
+            email:user.email
         };
 
         try {
@@ -112,7 +121,8 @@ const OrderPage = () => {
                 className="w-full rounded-xl bg-[#ADADAD]/15 dark:bg-[#F60101]/15 py-2 px-4 sm:min-w-[300px]"
                 placeholder="Enter your email"
                 required
-                value={email} 
+                readOnly
+                value={user.email} 
                 onChange={(e) => setEmail(e.target.value)} 
               />
             </label>

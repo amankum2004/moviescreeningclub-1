@@ -12,6 +12,7 @@ const qrRouter = require('@/routes/qr.route')
 const metricsRouter = require('@/routes/metrics.route')
 const foodRoutes = require("@/routes/food.route")
 const AdminFood = require("@/routes/AdminFood.route")
+const foodVerify = require('@/routes/foodVerify.route')
 
 router.use('/user', userRouter)
 router.use('/auth', authRouter)
@@ -25,5 +26,6 @@ router.use('/vote', votepagerouter)
 router.use('/metrics', metricsRouter)
 router.use('/food', foodRoutes)
 router.use('/adminfood', AdminFood)
+router.use('/foodverification',foodVerify)
 
 module.exports = router

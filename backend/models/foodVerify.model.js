@@ -18,4 +18,4 @@ const FoodVerifySchema = new mongoose.Schema({
 })
 
 
-module.exports = mongoose.model('FoodVerification', orderSchema);
+module.exports = mongoose.model('FoodVerification', FoodVerifySchema);
