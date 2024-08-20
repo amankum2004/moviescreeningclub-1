@@ -10,12 +10,15 @@ import { MembershipProvider } from '@/components/MembershipContext'
 import AuthenticatedRoute from '@/components/ProtectedRoute'
 import AddDropVolunteer from '@/routes/AddDropVolunteer'
 import MovieForm from '@/routes/AddMovie'
+import AdminFood from '@/routes/AdminFoodCorner'
 import ForgotPassword from '@/routes/auth/ForgotPassword'
 import GetOTP from '@/routes/auth/GetOTP'
 import Login from '@/routes/auth/Login'
 import Signup from '@/routes/auth/Signup'
 import UpdatePassword from '@/routes/auth/UpdatePassoword'
 import BuyMemberships from '@/routes/BuyMemberships'
+import FoodList from '@/routes/FoodItem'
+import FoodVerify from '@/routes/FoodVerify'
 import Guidelines from '@/routes/Guidelines'
 import Home from '@/routes/Home'
 import Metrics from '@/routes/Metrics'
@@ -25,9 +28,6 @@ import MyAccount from '@/routes/MyAccount'
 import Showtime from '@/routes/Showtime'
 import Tickets from '@/routes/Tickets'
 import MovieList from '@/routes/VotePage'
-import FoodList from '@/routes/FoodItem'
-import AdminFood from '@/routes/AdminFoodCorner'
-import VendorPage from './routes/vendorPage'
 
 const Scanner = lazy(() => import('@/routes/Scanner'))
 
@@ -163,7 +163,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/food"
+                  path="/order"
                   element={
                     <AuthenticatedRoute>
                       <FoodList />
@@ -171,10 +171,18 @@ function App() {
                   }
                 />
                 <Route
-                  path="/adminfood"
+                  path="/food"
                   element={
                     <AuthenticatedRoute minLevel="admin">
                       <AdminFood />
+                    </AuthenticatedRoute>
+                  }
+                />
+                <Route
+                  path="/foodverify"
+                  element={
+                    <AuthenticatedRoute minLevel="ticketvolunteer">
+                      <FoodVerify />
                     </AuthenticatedRoute>
                   }
                 />
