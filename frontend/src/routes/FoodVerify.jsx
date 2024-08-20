@@ -1,34 +1,10 @@
-<<<<<<< HEAD
-import { useState } from 'react'
-=======
 import { api } from '@/utils/api'
 import { useState } from 'react'
 import Swal from 'sweetalert2'
->>>>>>> 2991839200574039184e38cdf0b262db3d9c089c
 
 const FoodVerify = () => {
   const [email, setEmail] = useState('')
   const [otp, setOtp] = useState('')
-<<<<<<< HEAD
-
-  const handleVerifyOtp = async () => {
-    const verifyData = { email, otp }
-
-    try {
-      const response = await fetch('http://localhost:8000/food/verify-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(verifyData)
-      })
-      const data = await response.json()
-      if (response.ok) {
-        alert('OTP verified successfully!')
-      } else {
-        alert(data.message || 'Failed to verify OTP.')
-      }
-    } catch (error) {
-      console.error('Error verifying OTP:', error)
-=======
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState(null)
   const handleVerifyOtp = async () => {
@@ -69,30 +45,10 @@ const FoodVerify = () => {
       })
     } finally {
       setIsLoading(false)
->>>>>>> 2991839200574039184e38cdf0b262db3d9c089c
     }
   }
 
   return (
-<<<<<<< HEAD
-    <div>
-      <h2>Verify OTP</h2>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Enter your email"
-        required
-      />
-      <input
-        type="text"
-        value={otp}
-        onChange={(e) => setOtp(e.target.value)}
-        placeholder="Enter OTP"
-        required
-      />
-      <button onClick={handleVerifyOtp}>Verify OTP</button>
-=======
     <div className=" flex flex-col items-center ">
       <div className="bg-white rounded-xl p-4 gap-4 flex flex-col items-center w-fit">
         <p className="font-semibold text-xl ">Verify OTP</p>
@@ -139,7 +95,6 @@ const FoodVerify = () => {
           </div>
         )}
       </div>
->>>>>>> 2991839200574039184e38cdf0b262db3d9c089c
     </div>
   )
 }

@@ -188,7 +188,7 @@ function App() {
                 />
                 <Route path="/guidelines" element={<Guidelines />} />
                 <Route path="/metrics" element={<Metrics />} />
-                <Route path="/vendorpage" element={<VendorPage />} />
+                {/* <Route path="/vendorpage" element={<VendorPage />} /> */}
                 <Route path="*" element={<Navigate to="" />} />
               </Routes>
             </div>
